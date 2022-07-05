@@ -34,6 +34,8 @@ class GStreamerConan(ConanFile):
         "with_egl": [True, False],
         "with_wayland": [True, False],
         "with_xorg": [True, False],
+        "with_avtp": [True, False],
+        "with_srtp": [True, False],
         "with_introspection": [True, False],
     }
     default_options = {
@@ -52,6 +54,8 @@ class GStreamerConan(ConanFile):
         "with_egl": True,
         "with_wayland": True,
         "with_xorg": True,
+        "with_avtp": True,
+        "with_srtp": True,
         "with_introspection": False,
     }
     generators = "pkg_config"
@@ -104,6 +108,10 @@ class GStreamerConan(ConanFile):
             self.requires("vorbis/1.3.7")
         if self.options.with_pango:
             self.requires("pango/1.49.3")
+        if self.options.with_srtp:
+            self.requires("libsrtp/2.4.2")
+        if self.options.with_avtp:
+            self.requires("libavtp/0.2.0@camposs/stable")
 
     @property
     def _is_msvc(self):
@@ -208,6 +216,8 @@ class GStreamerConan(ConanFile):
         defs["gst-plugins-base:x11"] = "enabled" if self.options.get_safe("with_xorg") else "disabled"
         defs["gst-plugins-base:xshm"] = "enabled" if self.options.get_safe("with_xorg") else "disabled"
         defs["gst-plugins-base:xvideo"] = "enabled" if self.options.get_safe("with_xorg") else "disabled"
+        defs["gst-plugins-bad:avtp"] = "enabled" if self.options.get_safe("with_avtp") else "disabled"
+        defs["gst-plugins-bad:srtp"] = "enabled" if self.options.get_safe("with_srtp") else "disabled"
 
         meson.configure(build_folder=self._build_subfolder,
                         source_folder=self._source_subfolder,
@@ -588,6 +598,22 @@ class GStreamerConan(ConanFile):
         #         "tremor::tremor", "glib::glib-2.0", "glib::gobject-2.0"]
         #     gst_plugins.append("gstivorbisdec")
 
+        if self.options.get_safe("with_avtp"):
+            self.cpp_info.components["gstavtp"].libs = ["gstavtp"]
+            self.cpp_info.components["gstavtp"].libdirs.append(gst_plugin_path)
+            self.cpp_info.components["gstgstavtp"].requires = [
+                "gstreamer-1.0", "gstreamer-base-1.0",
+                "libavtp::libavtp", "glib::glib-2.0", "glib::gobject-2.0"]
+            gst_plugins.append("gstavtp")
+
+        if self.options.get_safe("with_srtp"):
+            self.cpp_info.components["gstsrtp"].libs = ["gstsrtp"]
+            self.cpp_info.components["gstsrtp"].libdirs.append(gst_plugin_path)
+            self.cpp_info.components["gstsrtp"].requires = [
+                "gstreamer-1.0", "gstreamer-base-1.0",
+                "libsrtp::libsrtp", "glib::glib-2.0", "glib::gobject-2.0"]
+            gst_plugins.append("gstsrtp")
+
         # Plugins ('sys')
         if self.options.get_safe("with_xorg"):
             self.cpp_info.components["gstximagesink"].libs = ["gstximagesink"]
@@ -755,6 +781,8 @@ class GStreamerConan(ConanFile):
             self.cpp_info.components["gstreamer-video-1.0"].system_libs = ["m"]
         self.cpp_info.components["gstreamer-video-1.0"].includedirs = [gst_include_path]
         self.cpp_info.components["gstreamer-video-1.0"].set_property("pkg_config_custom_content", pkgconfig_custom_content)
+
+
 
         gstreamer_root = self.package_folder
         self.output.info("Creating GSTREAMER_ROOT env var : %s" % gstreamer_root)
