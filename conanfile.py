@@ -36,6 +36,7 @@ class GStreamerConan(ConanFile):
         "with_xorg": [True, False],
         "with_avtp": [True, False],
         "with_srtp": [True, False],
+        "with_videoparsers": [True, False],
         "with_introspection": [True, False],
     }
     default_options = {
@@ -45,7 +46,7 @@ class GStreamerConan(ConanFile):
         "with_libpng": True,
         "with_libjpeg": "libjpeg",
         "with_graphene": True,
-        "with_pango": True,
+        "with_pango": False,
         "with_ogg": True,
         "with_opus": True,
         "with_theora": True,
@@ -54,8 +55,9 @@ class GStreamerConan(ConanFile):
         "with_egl": True,
         "with_wayland": True,
         "with_xorg": True,
-        "with_avtp": True,
-        "with_srtp": True,
+        "with_avtp": False,
+        "with_srtp": False,
+        "with_videoparsers": True,
         "with_introspection": False,
     }
     generators = "pkg_config"
@@ -218,6 +220,7 @@ class GStreamerConan(ConanFile):
         defs["gst-plugins-base:xvideo"] = "enabled" if self.options.get_safe("with_xorg") else "disabled"
         defs["gst-plugins-bad:avtp"] = "enabled" if self.options.get_safe("with_avtp") else "disabled"
         defs["gst-plugins-bad:srtp"] = "enabled" if self.options.get_safe("with_srtp") else "disabled"
+        defs["gst-plugins-bad:videoparsers"] = "enabled" if self.options.get_safe("with_videoparsers") else "disabled"
 
         meson.configure(build_folder=self._build_subfolder,
                         source_folder=self._source_subfolder,
