@@ -762,6 +762,14 @@ class GStreamerConan(ConanFile):
         self.cpp_info.components["gstreamer-rtsp-1.0"].includedirs = [gst_include_path]
         self.cpp_info.components["gstreamer-rtsp-1.0"].set_property("pkg_config_custom_content", pkgconfig_custom_content)
 
+        self.cpp_info.components["gstreamer-rtspserver-1.0"].names["pkg_config"] = "gstreamer-rtspserver-1.0"
+        self.cpp_info.components["gstreamer-rtspserver-1.0"].libs = ["gstrtspserver-1.0"]
+        self.cpp_info.components["gstreamer-rtspserver-1.0"].requires = [
+            "gstreamer-1.0", "gstreamer-base-1.0",
+            "gstreamer-sdp-1.0", "glib::gio-2.0", "gstreamer-rtp-1.0"]
+        self.cpp_info.components["gstreamer-rtspserver-1.0"].includedirs = [gst_include_path]
+        self.cpp_info.components["gstreamer-rtspserver-1.0"].set_property("pkg_config_custom_content", pkgconfig_custom_content)
+
         self.cpp_info.components["gstreamer-sdp-1.0"].names["pkg_config"] = "gstreamer-sdp-1.0"
         self.cpp_info.components["gstreamer-sdp-1.0"].libs = ["gstsdp-1.0"]
         self.cpp_info.components["gstreamer-sdp-1.0"].requires = ["gstreamer-1.0", "gstreamer-rtp-1.0", "glib::glib-2.0", "glib::gio-2.0"]
