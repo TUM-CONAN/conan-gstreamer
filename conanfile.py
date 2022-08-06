@@ -46,7 +46,7 @@ class GStreamerConan(ConanFile):
         "with_libpng": True,
         "with_libjpeg": "libjpeg",
         "with_graphene": True,
-        "with_pango": True,
+        "with_pango": False,
         "with_ogg": True,
         "with_opus": True,
         "with_theora": True,
