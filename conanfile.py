@@ -468,22 +468,17 @@ class GStreamerConan(ConanFile):
         self.cpp_info.components["gsttypefindfunctions"].requires = ["gstreamer-base-1.0", "gstreamer-pbutils-1.0", "glib::gio-2.0"]
         gst_plugins.append("gsttypefindfunctions")
 
-        self.cpp_info.components["gstvideoconvert"].libs = ["gstvideoconvert"]
-        self.cpp_info.components["gstvideoconvert"].libdirs.append(gst_plugin_path)
-        self.cpp_info.components["gstvideoconvert"].requires = ["gstreamer-video-1.0"]
-        gst_plugins.append("gstvideoconvert")
-
         self.cpp_info.components["gstvideorate"].libs = ["gstvideorate"]
         self.cpp_info.components["gstvideorate"].libdirs.append(gst_plugin_path)
         self.cpp_info.components["gstvideorate"].requires = ["gstreamer-video-1.0"]
         gst_plugins.append("gstvideorate")
 
-        self.cpp_info.components["gstvideoscale"].libs = ["gstvideoscale"]
-        self.cpp_info.components["gstvideoscale"].libdirs.append(gst_plugin_path)
-        self.cpp_info.components["gstvideoscale"].requires = [
+        self.cpp_info.components["gstvideoconvertscale"].libs = ["gstvideoconvertscale"]
+        self.cpp_info.components["gstvideoconvertscale"].libdirs.append(gst_plugin_path)
+        self.cpp_info.components["gstvideoconvertscale"].requires = [
             "gstreamer-1.0", "gstreamer-base-1.0",
             "gstreamer-video-1.0", "glib::glib-2.0", "glib::gobject-2.0"]
-        gst_plugins.append("gstvideoscale")
+        gst_plugins.append("gstvideoconvertscale")
 
         self.cpp_info.components["gstvideotestsrc"].libs = ["gstvideotestsrc"]
         self.cpp_info.components["gstvideotestsrc"].libdirs.append(gst_plugin_path)
