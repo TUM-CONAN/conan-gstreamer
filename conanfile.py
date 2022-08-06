@@ -8,7 +8,7 @@ required_conan_version = ">=1.29"
 
 class GStreamerConan(ConanFile):
     name = "gstreamer"
-    _version = "1.20.3"
+    _version = "1.21-dev"
     _revision = ""
     version = _version+_revision
 
@@ -46,7 +46,7 @@ class GStreamerConan(ConanFile):
         "with_libpng": True,
         "with_libjpeg": "libjpeg",
         "with_graphene": True,
-        "with_pango": False,
+        "with_pango": True,
         "with_ogg": True,
         "with_opus": True,
         "with_theora": True,
@@ -56,7 +56,7 @@ class GStreamerConan(ConanFile):
         "with_wayland": True,
         "with_xorg": True,
         "with_avtp": False,
-        "with_srtp": False,
+        "with_srtp": True,
         "with_videoparsers": True,
         "with_introspection": False,
     }
@@ -109,7 +109,7 @@ class GStreamerConan(ConanFile):
         if self.options.with_vorbis:
             self.requires("vorbis/1.3.7")
         if self.options.with_pango:
-            self.requires("pango/1.49.3")
+            self.requires("pango/1.50.8")
         if self.options.with_srtp:
             self.requires("libsrtp/2.4.2")
         if self.options.with_avtp:
@@ -152,16 +152,23 @@ class GStreamerConan(ConanFile):
         self.build_requires("meson/0.61.2")
         self.build_requires("pkgconf/1.7.4")
         if self.options.with_introspection:
-            self.build_requires("gobject-introspection/1.70.0")
+            self.build_requires("gobject-introspection/1.72.0")
         if self.settings.os == 'Windows':
             self.build_requires("winflexbison/2.5.24")
         else:
             self.build_requires("bison/3.7.6")
             self.build_requires("flex/2.6.4")
 
-    def source(self):
-        tools.get("https://gitlab.freedesktop.org/gstreamer/gstreamer/-/archive/{0}/gstreamer-{0}.tar.gz".format(self._version))
-        os.rename("%s-%s" % (self.name, self._version), self._source_subfolder)
+    scm = {
+        "type": "git",
+        "subfolder": "source_subfolder",
+        "url": "https://gitlab.freedesktop.org/gstreamer/gstreamer.git",
+        "revision": "main"
+     }
+
+    #def source(self):
+    #    tools.get("https://gitlab.freedesktop.org/gstreamer/gstreamer/-/archive/{0}/gstreamer-{0}.tar.gz".format(self._version))
+    #    os.rename("%s-%s" % (self.name, self._version), self._source_subfolder)
 
     def _configure_meson(self):
         if self._meson:
