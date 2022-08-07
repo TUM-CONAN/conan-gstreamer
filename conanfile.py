@@ -11,6 +11,7 @@ class GStreamerConan(ConanFile):
     _version = "1.21-dev"
     _revision = ""
     version = _version+_revision
+    short_paths = True
 
     description = "GStreamer is a development framework for creating applications like media players, video editors, streaming media broadcasters and so on"
     topics = ("conan", "gstreamer", "multimedia", "video", "audio", "broadcasting", "framework", "media")
