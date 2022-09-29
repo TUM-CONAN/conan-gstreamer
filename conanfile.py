@@ -91,7 +91,7 @@ class GStreamerConan(ConanFile):
             if self.options.get_safe("with_egl"):
                 self.requires("egl/system")
             if self.options.get_safe("with_wayland"):
-                self.requires("wayland/1.20.0")
+                self.requires("wayland/1.21.0")
                 self.requires("wayland-protocols/1.25")
             if self.options.with_graphene:
                 self.requires("graphene/1.10.8")
