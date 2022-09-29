@@ -150,7 +150,7 @@ class GStreamerConan(ConanFile):
             raise ConanInvalidConfiguration("OpenGL support with Wayland requires 'with_egl' turned on!")
 
     def build_requirements(self):
-        self.build_requires("meson/0.61.2")
+        self.build_requires("meson/0.63.2")
         self.build_requires("pkgconf/1.7.4")
         if self.options.with_introspection:
             self.build_requires("gobject-introspection/1.72.0")
