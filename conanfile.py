@@ -8,7 +8,7 @@ required_conan_version = ">=1.29"
 
 class GStreamerConan(ConanFile):
     name = "gstreamer"
-    _version = "1.21-dev"
+    _version = "1.22.0"
     _revision = ""
     version = _version+_revision
     short_paths = True
@@ -160,16 +160,16 @@ class GStreamerConan(ConanFile):
             self.build_requires("bison/3.7.6")
             self.build_requires("flex/2.6.4")
 
-    scm = {
-        "type": "git",
-        "subfolder": "source_subfolder",
-        "url": "https://gitlab.freedesktop.org/gstreamer/gstreamer.git",
-        "revision": "main"
-     }
+    #scm = {
+    #    "type": "git",
+    #    "subfolder": "source_subfolder",
+    #    "url": "https://gitlab.freedesktop.org/gstreamer/gstreamer.git",
+    #    "revision": "main"
+    # }
 
-    #def source(self):
-    #    tools.get("https://gitlab.freedesktop.org/gstreamer/gstreamer/-/archive/{0}/gstreamer-{0}.tar.gz".format(self._version))
-    #    os.rename("%s-%s" % (self.name, self._version), self._source_subfolder)
+    def source(self):
+        tools.get("https://gitlab.freedesktop.org/gstreamer/gstreamer/-/archive/{0}/gstreamer-{0}.tar.gz".format(self._version))
+        os.rename("%s-%s" % (self.name, self._version), self._source_subfolder)
 
     def _configure_meson(self):
         if self._meson:
