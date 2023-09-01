@@ -97,7 +97,7 @@ class GStreamerConan(ConanFile):
             if self.options.with_libjpeg == "libjpeg":
                 self.requires("libjpeg/9e")
             elif self.options.with_libjpeg == "libjpeg-turbo":
-                self.requires("libjpeg-turbo/2.1.5")
+                self.requires("libjpeg-turbo/3.0.0")
         if self.options.with_ogg:
             self.requires("ogg/1.3.5")
         if self.options.with_opus:

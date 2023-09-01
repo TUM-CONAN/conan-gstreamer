@@ -25,7 +25,7 @@ prefix/
 /gst-examples
 /gst-plugins-rs
 
-# Because of unwanted diff caused by redirect wrap files 
+# Because of unwanted diff caused by redirect wrap files
 # https://gitlab.freedesktop.org/gstreamer/gstreamer/-/merge_requests/1140
 subprojects/*.wrap
 
@@ -49,3 +49,5 @@ subprojects/*/
 !subprojects/macos-bison-binary
 !subprojects/win-flex-bison-binaries
 !subprojects/win-nasm
+test_package/CMakeUserPresets.json
+test_package/build/
